@@ -11,6 +11,7 @@
 require 'rubygems'
 require 'git'
 require 'json'
+require 'fileutils'
 
 class PackageHookServer
 
@@ -19,7 +20,13 @@ class PackageHookServer
   
   def initialize(options)
     options.each_pair do |k, v|
-      instance_variable_set("@#{k}", v) if [:repository_path, :build_path].include?(k)
+      instance_variable_set("@#{k}", v) if [:repository_url, :repository_path, :build_path].include?(k)
+    end
+    unless File.exists?(@repository_path)
+      Git.clone(@repository_url, @repository_path)
+    end
+    unless File.exists?(@build_path)
+      FileUtils.mkdir(@build_path)
     end
   end
 

@@ -7,6 +7,7 @@ require 'fileutils'
 require 'yaml'
 require 'git'
 require 'pp'
+require 'erb'
 
 namespace :feather do
   desc "Make plugin package"
@@ -26,15 +27,31 @@ namespace :feather do
       package(path, target)
     end
   end
-  
+
   namespace :hook do
-    desc "rake feather:hook:install path=<target path>"
+    desc "Install the PackageHookServer"
     task :install do
-      path = ENV['path'].nil? ? File.join(File.dirname(__FILE__), 'hook') : ENV['path']
-      FileUtils.mkdir(path)
-      repository_path = File.join(path, 'repository')
-      Git.clone('git://github.com/aflatter/feather-plugins.git', repository_path)
-      FileUtils.cp(File.join(File.dirname(__FILE__), 'misc', 'github.ru'), File.join(path, 'github.ru'))
+
+      file_path = ENV['path']
+      
+      unless file_path
+        puts "Usage: rake feather:hook:install path=<target rackup file>"
+        puts "  * target rackup file and it's parent directories will be created"
+        return
+      end
+
+      dir_path  = File.dirname(file_path)
+
+      erb = ERB.new(File.read(File.join(File.dirname(__FILE__), 'utils/templates/package_hook_server.ru.erb')))
+      library_path = File.join(File.dirname(__FILE__), 'utils')
+      repository_path = File.join(dir_path, 'repository')
+      repository_url = Git.open(File.dirname(__FILE__)).remote('origin').url
+      rackup = erb.result(binding)
+      
+      FileUtils.mkdir_p(dir_path)
+      FileUtils.mkdir( %w{build repository}.map { |d| File.join(dir_path, d) }.select {|d| !File.exists?(d) } )
+      File.open(file_path, 'w') {|f| f.write(rackup) }
+      
     end
   end
 end
