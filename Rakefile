@@ -5,6 +5,7 @@ require 'rake/testtask'
 require 'spec/rake/spectask'
 require 'fileutils'
 require 'yaml'
+require 'git'
 require 'pp'
 
 namespace :feather do
@@ -23,6 +24,17 @@ namespace :feather do
     paths.each do |path|
       puts "Packaging... (#{path})"
       package(path, target)
+    end
+  end
+  
+  namespace :hook do
+    desc "rake feather:hook:install path=<target path>"
+    task :install do
+      path = ENV['path'].nil? ? File.join(File.dirname(__FILE__), 'hook') : ENV['path']
+      FileUtils.mkdir(path)
+      repository_path = File.join(path, 'repository')
+      Git.clone('git://github.com/aflatter/feather-plugins.git', repository_path)
+      FileUtils.cp(File.join(File.dirname(__FILE__), 'misc', 'github.ru'), File.join(path, 'github.ru'))
     end
   end
 end
