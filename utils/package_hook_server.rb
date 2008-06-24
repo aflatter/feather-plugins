@@ -19,8 +19,8 @@ class PackageHookServer
   THANK_YOU_COMMENT = "Thanks! You beautiful soul you."
   
   def initialize(options)
+    @root_path = options.delete(:root_path)
     options.each_pair do |k, v|
-      @root_path = options.delete(:root_path)
       if [:repository_url, :repository_path, :build_path, :root_path].include?(k)
         v = File.expand_path(v, @root_path) if @root_path and k.to_s.slice(-5..-1) == '_path'
         instance_variable_set("@#{k}", v)
