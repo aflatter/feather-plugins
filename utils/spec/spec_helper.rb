@@ -7,7 +7,7 @@ module SpecHelper
 
   SampleJson = <<-EOD
   { 
-    "before": "2a03908c7167daab58459a362789f3b809e29f72",
+    "before": "019c87d0e432fa923e793b9a6e7faab7f338d6de",
     "repository": {
       "url": "http://some.url.com/repo",
       "name": "repo",
@@ -17,44 +17,17 @@ module SpecHelper
       }
     },
     "commits": {
-      "4901775b4c9efd217e5f6bda2522177ee8218238": {
-        "url": "http://some.url.com/commit/4901775b4c9efd217e5f6bda2522177ee8218238",
+      "019c87d0e432fa923e793b9a6e7faab7f338d6de": {
+        "url": "http://some.url.com/commit/019c87d0e432fa923e793b9a6e7faab7f338d6de",
         "author": {
-          "email": "some@user.com",
-          "name": "Some User" 
+          "email": "el@eldiablo.co.uk",
+          "name": "El Draper" 
         },
-        "message": "Deleted A",
-        "timestamp": "2008-02-15T14:57:17-08:00" 
-      },
-      "3b7613dca210dbcf69942aaf01048b65bfc84176": {
-        "url": "http://some.url.com/commit/3b7613dca210dbcf69942aaf01048b65bfc84176",
-        "author": {
-          "email": "some@user.com",
-          "name": "Some User" 
-        },
-        "message": "Modified A; Added C",
-        "timestamp": "2008-02-15T14:57:17-08:00" 
-      },
-      "2ae9f3b315cab68e06aa71a69a2524be868b600f": {
-        "url": "http://some.url.com/commit/2ae9f3b315cab68e06aa71a69a2524be868b600f",
-        "author": {
-          "email": "some@user.com",
-          "name": "Some User" 
-        },
-        "message": "Modified B",
-        "timestamp": "2008-02-15T14:57:17-08:00" 
-      },
-      "3a99e9c0fc0aaa00f959344778b6ada155444c7e": {
-        "url": "http://some.url.com/commit/3a99e9c0fc0aaa00f959344778b6ada155444c7e",
-        "author": {
-          "email": "some@user.com",
-          "name": "Some User" 
-        },
-        "message": "Added B",
+        "message": "fix some of these install files to simplify plugin installation",
         "timestamp": "2008-02-15T14:36:34-08:00" 
       }
     },
-    "after": "4901775b4c9efd217e5f6bda2522177ee8218238",
+    "after": "4299ce8fa5f35a0c8c921bcac9bebd663e123406",
     "ref": "refs/heads/master" 
   }
   EOD
@@ -80,9 +53,9 @@ module SpecHelper
   
   class << self
 
-    def generate_temp_path
-      temp_path = "/tmp/spec-#{$$}-#{Time.now.to_i}-#{rand(1000)}"
-      File.exists?(temp_path) ? generate_temp_path : temp_path
+    def generate_temp_path(string)
+      temp_path = "/tmp/spec-#{Time.now.to_i}-#{string || $$}-#{rand(1000)}"
+      File.exists?(temp_path) ? generate_temp_path(string) : temp_path
     end
     
   end

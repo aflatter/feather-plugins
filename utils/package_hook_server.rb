@@ -71,7 +71,7 @@ class PackageHookServer
   
   # Execute rake task to build a package
   def package_plugin(name)
-    puts `cd #{@repository_path}; rake feather:package path=#{name} target=#{@build_path}`
+    `cd #{@repository_path}; rake feather:package path=#{name} target=#{@build_path}`
   end
 
   # Call is the entry point for all rack apps.
