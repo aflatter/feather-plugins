@@ -20,8 +20,9 @@ class PackageHookServer
   
   def initialize(options)
     options.each_pair do |k, v|
-      if [:repository_url, :repository_path, :build_path].include?(k)
-        v = File.expand_path(v, File.dirname(__FILE__)) if k.to_s.slice(-5..-1) == '_path'
+      @root_path = options.delete[:root_path]
+      if [:repository_url, :repository_path, :build_path, :root_path].include?(k)
+        v = File.expand_path(v, @root_path) if @root_path and k.to_s.slice(-5..-1) == '_path'
         instance_variable_set("@#{k}", v)
       else
         raise 'You need to provide :repository_path, :build_path and :repository_url'
