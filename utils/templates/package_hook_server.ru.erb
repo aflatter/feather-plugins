@@ -6,5 +6,6 @@ require 'package_hook_server'
 run PackageHookServer.new(
   :build_path       => File.join(File.dirname(__FILE__), 'build'),
   :repository_path  => File.join(File.dirname(__FILE__), 'repository'),
-  :repository_url   => "<%= repository_url %>"
+  :repository_url   => "<%= repository_url %>",
+  :root_path        => File.expand_path(File.dirname(__FILE__))
 )

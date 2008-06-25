@@ -7,11 +7,14 @@ require 'rack/response'
 require 'fileutils'
 require 'git'
 
+require 'pp'; pp PackageHookServer.instance_hooks.keys
+
 describe PackageHookServer do
   
   before(:all) do
     @temp_path = SpecHelper.generate_temp_path('repository')
     @build_path = SpecHelper.generate_temp_path('build')
+    WhatEver = Hash.new
   end
   
   after(:all) do
@@ -48,5 +51,12 @@ describe PackageHookServer do
   end
   
   it 'should be able to build a package'
+  
+  it 'should allow hooks for certain methods' do
+    hookable_methods = PackageHookServer.instance_hooks.keys
+    [:handle_request, :call, :package_plugin, :rude_comment, :nice_comment].each do |m|
+      hookable_methods.include?(m).should be_true
+    end
+  end
 
 end

@@ -12,8 +12,12 @@ require 'rubygems'
 require 'git'
 require 'json'
 require 'fileutils'
+require 'extlib/assertions'
+require 'extlib/hook'
 
 class PackageHookServer
+  
+  include Extlib::Hook
 
   GO_AWAY_COMMENT = "Be gone, foul creature of the internet."
   THANK_YOU_COMMENT = "Thanks! You beautiful soul you."
@@ -49,8 +53,7 @@ class PackageHookServer
     @res.write THANK_YOU_COMMENT
   end
 
-  # Does what it says on the tin. By default, not much, it just prints the
-  # received payload.
+  # Does what it says on the tin. 
   def handle_request
     
     # Send status 404 when no payload is supplied
@@ -73,7 +76,9 @@ class PackageHookServer
   
   # Parses a Git::Diff#stats Hash and returns an Array of plugin names
   def parse_stats(stats)
-    stats[:files].keys.select { |file| file[0..7] == 'feather-' }.map { |file| file.split('/').first }.uniq
+    stats[:files].keys.
+    select { |file| file[0..7] == 'feather-' }.
+    map { |file| file.split('/').first }.uniq
   end
   
   # Execute rake task to build a package
@@ -88,5 +93,10 @@ class PackageHookServer
     handle_request
     @res.finish
   end
+
+  # Hook support for the following methods
+  # This allows you to subclass PackageHookServer and add hooks via after :method and before :method
+  # Or via PackageHookServer.after(..) and PackageHookServer.before(..)
+  register_instance_hooks :rude_comment, :nice_comment, :call, :handle_request, :package_plugin
 
 end
