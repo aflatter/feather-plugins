@@ -59,14 +59,14 @@ class PackageHookServer
     # Send status 404 when no payload is supplied
     payload = @req.POST["payload"]
     return rude_comment if payload.nil?
-    payload = JSON.parse(payload)
+    @payload = JSON.parse(payload)
 
     # Open git repository and pull updates
     @git = Git.open(@repository_path)
     @git.pull
 
     # Get plugins and package them
-    stats = @git.diff(payload['before'], payload['after']).stats
+    stats = @git.diff(@payload['before'], @payload['after']).stats
     parse_stats(stats).each { |name| package_plugin(name) }
     
     # Cool, there we go
