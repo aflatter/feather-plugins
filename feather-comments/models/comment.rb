@@ -32,9 +32,10 @@ class Comment
   end
   
   def prepend_http_if_needed
-		protocol = "http://"
-   	self.website.insert(0, protocol) if self.website.rindex(protocol).nil? && !self.website.empty?
-		self.website.strip!
+    if !self.website.nil? && self.website.strip! && !self.website.empty?
+      protocol = "http://"
+      self.website.insert(0, protocol) if self.website.rindex(protocol).nil?
+    end
   end
   
   def set_create_activity
