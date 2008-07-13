@@ -1,0 +1,12 @@
+<% throw_content :right do %>
+  <%= partial :sidebar %>
+<% end %>
+
+<%= error_messages_for @twitter_account %>
+
+<h1>Edit Twitter Account</h1>
+
+<% form_for :twitter_account, :action => url(:admin_twitter_account, @twitter_account), :method => :put do %>
+  <%= partial :form %>
+	<%= submit_button 'Save account' %> or <%= link_to 'Cancel', url(:admin_twitter_accounts) %>
+<% end %>

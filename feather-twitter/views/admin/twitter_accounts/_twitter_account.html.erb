@@ -1,0 +1,6 @@
+<tr>
+	<td><%= link_to twitter_account.username, url(:admin_twitter_account, twitter_account) %></td>
+	<td><%= twitter_account.ignore_replies %></td>
+	<td><%= twitter_account.last_scan_at.nil? ? 'no scan yet' : render_relative_date(twitter_account.last_scan_at) %></td>
+	<td><%= link_to "Force scan", url(:scan_admin_twitter_account, twitter_account) %> | <%= link_to "Edit", url(:edit_admin_twitter_account, twitter_account) %> | <%= link_to 'Delete', url(:delete_admin_twitter_account, twitter_account), {:method => :delete, :onclick => "return confirm('Are you sure?')"} %></td>
+</tr>

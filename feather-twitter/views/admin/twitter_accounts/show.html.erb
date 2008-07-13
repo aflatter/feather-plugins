@@ -1,0 +1,27 @@
+<% throw_content :right do %>
+  <%= partial :sidebar %>
+<% end %>
+
+<h1>View Twitter account</h1>
+
+<p>
+	Username:
+	<%= @twitter_account.username %>
+</p>
+
+<p>
+	Ignore Replies:
+	<%= @twitter_account.ignore_replies %>
+</p>
+
+<p>
+	Tweets last scanned at:
+	<%= @twitter_account.last_scan_at.nil? ? "Never" : @twitter_account.last_scan_at.to_s %>
+</p>
+
+<p>
+	<%= link_to "Force scan for tweets", url(:scan_admin_twitter_account, @twitter_account) %>
+</p>
+
+<%= link_to "Edit account", url(:edit_admin_twitter_account, @twitter_account) %> |
+<%= link_to "View tweets", url(:admin_tweets) %>

@@ -1,0 +1,11 @@
+<% throw_content :right do %>
+  <%= partial :sidebar %>
+<% end %>
+
+<%= error_messages_for @twitter_account %>
+<h1>New Twitter Account</h1>
+
+<% form_for :twitter_account, :action => url(:admin_twitter_accounts) do %>
+  <%= partial :form %>
+  <%= submit_button 'Create account' %> or <%= link_to 'Cancel', url(:admin_twitter_accounts) %>
+<% end %>

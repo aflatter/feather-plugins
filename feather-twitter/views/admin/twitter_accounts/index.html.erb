@@ -1,0 +1,19 @@
+<% throw_content :right do %>
+  <%= partial :sidebar %>
+<% end %>
+
+<h1>View Twitter Accounts</h1>
+
+<table class='tabular'>
+	<thead>
+    <tr>
+    	<th>Account Name</th>
+    	<th>Ignore Replies?</th>
+    	<th>Last Scan</th>
+    	<th>&nbsp;</th>
+    </tr>
+  </thead>
+  <%= partial :twitter_account, :with => @twitter_accounts %>
+</table>
+<br />
+<%= link_to "New account", url(:new_admin_twitter_account) %> | <%= link_to "View tweets", url(:admin_tweets) %>

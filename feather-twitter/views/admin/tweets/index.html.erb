@@ -1,10 +1,6 @@
 <% throw_content :right do %>
   <h4>View Tweets</h4>
-  <p>
-	Tweets are the messages you send to Twitter, and they can be integrated within your Feather blog.
-	<br />
-	<%= link_to "View Twitter settings", url(:admin_twitter_settings) %>
-  </p>
+  <p>Tweets are the messages you send to Twitter, and they can be integrated within your Feather blog.</p>
 <% end %>
 
 <h1>View Tweets</h1>
@@ -22,4 +18,4 @@
   <%= partial('admin/tweets/tweet', :with => @tweets) %>
 </table>
 <br />
-<%= link_to "View Twitter settings", url(:admin_twitter_settings) %>
+<%= link_to "View Twitter accounts", url(:admin_twitter_accounts) %>
